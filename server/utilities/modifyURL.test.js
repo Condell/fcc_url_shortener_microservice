@@ -1,5 +1,5 @@
-import chai, {
-  expect
+import {
+  expect,
 } from 'chai';
 import {
   isValidUrl,
@@ -10,9 +10,19 @@ import {
 } from './modifyURL';
 
 
-describe('modifyURL tests', () => {
-  xdescribe('isValidUrl tests', () => {
+/* eslint-disable no-unused-expressions */
 
+
+describe('modifyURL tests', () => {
+  describe('isValidUrl tests', () => {
+    const valid = 'http://www.google.com';
+    const invalid = 'google';
+    it('should return true when provided a valid URL', () => {
+      expect(isValidUrl(valid)).to.be.true;
+    });
+    it('should return false when provided an invalid URL', () => {
+      expect(isValidUrl(invalid)).to.be.false;
+    });
   });
   // xdescribe('validUrl tests', () => {
 

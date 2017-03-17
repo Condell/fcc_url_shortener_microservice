@@ -1,3 +1,5 @@
+import validate from 'validate.js';
+
 // User Story 1:
 // I can pass a URL as a parameter and I will receive a shortened
 //  URL in the JSON response.
@@ -14,9 +16,19 @@
 //  my original link.
 
 
-function isValidUrl() {
-  // Take string as a parameter
-  // Check if it is in valid URL format (http and https)
+function isValidUrl(string) {
+  const validatedString = validate({
+    website: string,
+  }, {
+    website: {
+      url: true,
+    },
+  });
+  // Check if the validatedString is in valid URL format (http and https)
+  if (validatedString === undefined) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -44,8 +56,8 @@ function isValidUrl() {
 
 export {
   isValidUrl,
-  validUrl,
-  notValidUrl,
-  makeShortUrl,
-  createJsonResponse
-}
+  // validUrl,
+  // notValidUrl,
+  // makeShortUrl,
+  // createJsonResponse
+};
