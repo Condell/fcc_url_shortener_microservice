@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import index from './routes/index';
 import newUrl from './routes/newUrl';
+import bodyParser from 'body-parser';
 
 
 const port = process.env.PORT || 3000;
@@ -34,6 +35,8 @@ db.once('open', () => {
   console.log('connected to db'); // eslint-disable-line no-console
 });
 
+
+app.use(bodyParser.json());
 
 app.use('/', index);
 app.use('/new', newUrl);

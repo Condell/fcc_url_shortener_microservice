@@ -1,4 +1,6 @@
 import validate from 'validate.js';
+import Url from '../models';
+
 
 // User Story 1:
 // I can pass a URL as a parameter and I will receive a shortened
@@ -16,24 +18,40 @@ import validate from 'validate.js';
 //  my original link.
 
 
-function isValidUrl(string) {
-  const validatedString = validate({
-    website: string,
+function isValidUrlQueryString(urlQueryString) {
+  const checkedUrl = validate({
+    website: urlQueryString,
   }, {
     website: {
       url: true,
     },
   });
-  // Check if the validatedString is in valid URL format (http and https)
-  if (validatedString === undefined) {
+  // Check if the checkedUrl is in valid URL format (http and https)
+  if (checkedUrl === undefined) {
     return true;
   }
   return false;
 }
 
 
-// function validURL() {
+function generateRandomNumber() {
+  // will use this when creating a shortened URL
+  const randomNumberBetween0and999 = Math.floor(Math.random() * 1000)
+  return randomNumberBetween0and999;
+}
+
+
+function createFinalUrls() {
+    const url = new Url();
+    console.log(url);
+    return true;
+}
+
+
+// function saveFinalUrlsToDatabase(jsonToSave) {
+
 //     // If it is valid save the original URL to the db
+//     return true;
 // }
 
 
@@ -55,8 +73,10 @@ function isValidUrl(string) {
 //    Must be able to navigate to the short URL and be redirected to original
 
 export {
-  isValidUrl,
-  // validUrl,
+  isValidUrlQueryString,
+  generateRandomNumber,
+  createFinalUrls,
+  // saveFinalUrlsToDatabase,
   // notValidUrl,
   // makeShortUrl,
   // createJsonResponse
