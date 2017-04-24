@@ -2,15 +2,10 @@ import {
   expect,
 } from 'chai';
 import {
-  isValidUrlQueryString,
-  saveFinalUrlsToDatabase,
-  generateRandomNumber,
-  createFinalUrls,
-  // notValidUrl,
-  // makeShortUrl,
-  // createJsonResponse
+  validateURL,
 } from './modifyURL';
-
+import * as RF from 'ramda-fantasy';
+import * as R from 'ramda';
 
 /* eslint-disable no-unused-expressions */
 
@@ -18,37 +13,12 @@ import {
 describe('modifyURL tests', () => {
   const valid = 'http://www.google.com';
   const invalid = 'google';
-  describe('isValidUrlQueryString tests', () => {
-    it('should return true when provided a valid URL', () => {
-      expect(isValidUrlQueryString(valid)).to.be.true;
+  describe('validateURL tests', () => {
+    it('should return the url when provided a valid URL', () => {
+      expect(validateURL(valid)).to.eql(RF.Either.Right(valid));
     });
     it('should return false when provided an invalid URL', () => {
-      expect(isValidUrlQueryString(invalid)).to.be.false;
+      expect(validateURL(invalid)).to.eql(RF.Either.Left('Not a valid URL'));
     });
   });
-
-  describe('createFinalUrls tests', () => {
-    it('should return an object containing short and long urls', () => {
-      expect(createFinalUrls()).to.be.true;
-    });
-  });
-
-  describe('generateRandomNumber tests', () => {
-    it('should return a random number between 0 and 999', () => {
-      // change expect statement
-      expect(generateRandomNumber()).to.exist;
-    });
-  });
-
-    xdescribe('saveFinalUrlsToDatabase tests', () => {
-    it('should save json to database', () => {
-      expect(saveFinalUrlsToDatabase(valid)).to.exist;
-    });
-  });
-  // xdescribe('makeShortUrl tests', () => {
-
-  // });
-  // xdescribe('createJsonResponse tests', () => {
-
-  // });
 });

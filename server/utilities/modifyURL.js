@@ -1,6 +1,7 @@
-import validate from 'validate.js';
+import validUrl from 'valid-url';
+import * as R from 'ramda';
 import Url from '../models';
-
+import * as RF from 'ramda-fantasy';
 
 // User Story 1:
 // I can pass a URL as a parameter and I will receive a shortened
@@ -18,37 +19,15 @@ import Url from '../models';
 //  my original link.
 
 
-function isValidUrlQueryString(urlQueryString) {
-  const checkedUrl = validate({
-    website: urlQueryString,
-  }, {
-    website: {
-      url: true,
-    },
-  });
-  // Check if the checkedUrl is in valid URL format (http and https)
-  if (checkedUrl === undefined) {
-    return true;
-  }
-  return false;
+const validateURL = (url) => {
+  return validUrl.isWebUri(url) ? RF.Either.Right(url) : RF.Either.Left('Not a valid URL');
 }
+//console.log(validateURL('http://www.google.com'))
 
 
-function generateRandomNumber() {
-  // will use this when creating a shortened URL
-  const randomNumberBetween0and999 = Math.floor(Math.random() * 1000)
-  return randomNumberBetween0and999;
-}
 
 
-function createFinalUrls() {
-    const url = new Url();
-    console.log(url);
-    return true;
-}
 
-
-// function saveFinalUrlsToDatabase(jsonToSave) {
 
 //     // If it is valid save the original URL to the db
 //     return true;
@@ -73,11 +52,5 @@ function createFinalUrls() {
 //    Must be able to navigate to the short URL and be redirected to original
 
 export {
-  isValidUrlQueryString,
-  generateRandomNumber,
-  createFinalUrls,
-  // saveFinalUrlsToDatabase,
-  // notValidUrl,
-  // makeShortUrl,
-  // createJsonResponse
+  validateURL
 };
