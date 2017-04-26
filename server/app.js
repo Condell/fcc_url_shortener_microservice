@@ -1,11 +1,12 @@
 import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
 import index from './routes/index';
 import newUrl from './routes/newUrl';
-import bodyParser from 'body-parser';
-
+import {
+  connectToDB,
+} from './functions/impure/dbOperations';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -20,23 +21,13 @@ if (env === 'development') {
 }
 
 
-mongoose.connect(process.env.MONGOLAB_URI);
-
-
-const db = mongoose.connection;
-
-
-db.on('error', (err) => {
-  console.log('communication error', err); // eslint-disable-line no-console
-});
-
-
-db.once('open', () => {
-  console.log('connected to db'); // eslint-disable-line no-console
-});
+connectToDB(process.env.MONGOLAB_URI)
+  .fork(err => console.error('Error connecting to the database; Error:', err), // eslint-disable-line no-console
+        () => console.log('Connected to the database')); // eslint-disable-line no-console
 
 
 app.use(bodyParser.json());
+
 
 app.use('/', index);
 app.use('/new', newUrl);

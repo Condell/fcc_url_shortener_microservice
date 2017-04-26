@@ -1,5 +1,4 @@
 import express from 'express';
-import { isValidQueryString } from '../utilities/modifyURL';
 
 const router = express.Router();
 
