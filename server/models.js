@@ -1,5 +1,9 @@
 import mongoose from 'mongoose';
 
+
+/* eslint-disable import/prefer-default-export */
+
+
 const UrlSchema = mongoose.Schema({
   original_url: String,
   // short_url: String,
@@ -7,6 +11,6 @@ const UrlSchema = mongoose.Schema({
 
 const Url = mongoose.model('Url', UrlSchema);
 
-export default Url;
+export { Url };
 
 // Instance method to calculate short url?
