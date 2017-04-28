@@ -22,7 +22,7 @@ if (env === 'development') {
 
 
 connectToDB(process.env.MONGOLAB_URI)
-  .fork(err => console.error('Error connecting to the database; Error:', err), // eslint-disable-line no-console
+  .fork(err => Error('Error connecting to the database; Error:', err), // eslint-disable-line no-console
         () => console.log('Connected to the database')); // eslint-disable-line no-console
 
 

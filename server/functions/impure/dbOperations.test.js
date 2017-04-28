@@ -5,8 +5,11 @@ import {
 } from 'chai';
 import {
   connectToDB,
-  searchForUrl,
+  searchDbFor,
 } from './dbOperations';
+
+
+/* eslint-disable no-unused-expressions */
 
 
 describe('impure tests', () => {
@@ -15,9 +18,18 @@ describe('impure tests', () => {
       expect(connectToDB(process.env.MONGOLAB_URI)).to.be.an.instanceOf(RF.Future);
     });
   });
-  describe('searchForUrl', () => {
-    it('should return a Future', () => {
-      expect(searchForUrl('http://www.google.com')).to.be.an.instanceOf(RF.Future);
+  describe('searchDbFor', () => {
+    it('should return JSON containing the original_url if present', (done) => {
+      searchDbFor('http://www.google.com').fork(console.error, (result) => {
+        expect(result).to.have.property('original_url', 'http://www.google.com');
+        done();
+      });
+    });
+    it('should return null if not present', (done) => {
+      searchDbFor('invalid').fork(console.log, (result) => {
+        expect(result).to.be.null;
+        done();
+      });
     });
   });
 });
