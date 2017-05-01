@@ -9,7 +9,7 @@ import {
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable no-unused-vars */
-
+/* eslint-disable indent */
 
 // trace :: String -> Object -> Object
 const trace = R.curry((tag, x) => {
@@ -24,10 +24,25 @@ const connectToDB = DB => RF.Future((reject, resolve) =>
 
 
 // searchDbFor :: String -> Future Error JSON
-const searchDbFor = query => RF.Future((reject, resolve) =>
+const searchDbFor = value => RF.Future((reject, resolve) => {
   Url.findOne({
-    original_url: query,
-  }, (err, result) => err ? reject(err) : resolve(result)));
+    $or: [{
+        original_url: {
+          $eq: value,
+        },
+      },
+      {
+        short_url: {
+          $eq: value,
+        },
+      },
+    ],
+  }, {
+    original_url: 1,
+    short_url: 1,
+    _id: 0,
+  }, (err, result) => err ? reject(err) : resolve(result));
+});
 
 
 export {

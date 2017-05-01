@@ -26,7 +26,7 @@ describe('impure tests', () => {
       });
     });
     it('should return null if not present', (done) => {
-      searchDbFor('invalid').fork(console.log, (result) => {
+      searchDbFor('invalid').fork(console.error, (result) => {
         expect(result).to.be.null;
         done();
       });
