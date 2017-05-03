@@ -4,12 +4,16 @@ import mongoose from 'mongoose';
 import {
   Url,
 } from '../../models';
+// import {
+//   validateURL,
+// } from '../pure/modifyURL';
 
 
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable no-unused-vars */
 /* eslint-disable indent */
+
 
 // trace :: String -> Object -> Object
 const trace = R.curry((tag, x) => {
@@ -24,7 +28,7 @@ const connectToDB = DB => RF.Future((reject, resolve) =>
 
 
 // searchDbFor :: String -> Future Error JSON
-const searchDbFor = value => RF.Future((reject, resolve) => {
+const searchDBFor = value => RF.Future((reject, resolve) => {
   Url.findOne({
     $or: [{
         original_url: {
@@ -45,7 +49,18 @@ const searchDbFor = value => RF.Future((reject, resolve) => {
 });
 
 
+// nullCheck :: String -> Future JSON JSON
+const nullCheck = data => RF.Future((reject, resolve) =>
+  R.isNil(data) ? reject(data) : resolve(data));
+
+
+// returnJSON :: -> String -> JSON
+const returnJSON = R.compose(R.chain(nullCheck), searchDBFor);
+
+
 export {
   connectToDB,
-  searchDbFor,
+  searchDBFor,
+  trace,
+  returnJSON,
 };

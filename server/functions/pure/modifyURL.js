@@ -13,7 +13,7 @@ import validUrl from 'valid-url';
 
 
 // validateURL :: String -> Either (String, String)
-const validateURL = url => validUrl.isWebUri(url) ? RF.Either.Right(url) : RF.Either.Left('Not a valid URL');
+const validateURL = url => validUrl.isWebUri(url) ? RF.Either.Right(url) : RF.Either.Left(null);
 
 
 export {
